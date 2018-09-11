@@ -1,0 +1,3 @@
+%{
+  "mappable": {:hex, :mappable, "0.2.3", "2e27b4cf3d76d80142faf46ffccbf68a64dfa8fd51c633a0c3b608cae8477ac7", [:mix], [], "hexpm"},
+}
