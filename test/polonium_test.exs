@@ -113,4 +113,29 @@ defmodule PoloniumTest do
     assert Phoenix.HTML.safe_to_string({:safe, html}) ==
              "<div class=\"outer\">Inner Text<br class=\"inner\"></br></div>"
   end
+
+  test "should compute diff of vnodes" do
+    node_a = %Polonium.VNode{
+      node_name: "div",
+      attributes: %{"class" => "outer"},
+      children: ["This is vnode A"]
+    }
+
+    node_b = %Polonium.VNode{
+      node_name: "div",
+      attributes: %{"class" => "inner"},
+      children: ["This is vnode B"]
+    }
+
+    diff = Polonium.diff(node_a, node_b)
+
+    assert diff == %{
+             attributes: %{"class" => ["outer", "inner"]},
+             children: %{
+               "0" => ["This is vnode B"],
+               "_0" => ["This is vnode A", 0, 0],
+               "_t" => "a"
+             }
+           }
+  end
 end

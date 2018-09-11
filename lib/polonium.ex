@@ -47,4 +47,8 @@ defmodule Polonium do
   end
 
   def render(vnode) when is_binary(vnode), do: vnode
+
+  def diff(%Polonium.VNode{} = vnode_a, %Polonium.VNode{} = vnode_b) do
+    JsonDiffEx.diff(vnode_a, vnode_b)
+  end
 end
