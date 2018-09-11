@@ -31,4 +31,20 @@ defmodule Polonium do
   defp validate_child(child) do
     raise "Unrecognized child: #{inspect(child)}.\nSupported child types are: Polonium.VNode, string or number"
   end
+
+  def render(%Polonium.VNode{} = vnode) do
+    # TODO: fix this memory leak
+    tag_name = String.to_atom(vnode.node_name)
+    attributes = vnode.attributes |> Map.delete("key") |> Mappable.to_list()
+
+    Phoenix.HTML.Tag.content_tag tag_name, attributes do
+      render(vnode.children)
+    end
+  end
+
+  def render(vnode) when is_list(vnode) do
+    Enum.map(vnode, &render(&1))
+  end
+
+  def render(vnode) when is_binary(vnode), do: vnode
 end

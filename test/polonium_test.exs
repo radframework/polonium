@@ -90,4 +90,27 @@ defmodule PoloniumTest do
       Polonium.h("div", [], {:tuples, :are, :not, :expected, :here})
     end
   end
+
+  test "should render to HTML" do
+    vnode = %Polonium.VNode{
+      node_name: "div",
+      attributes: %{"class" => "outer", "key" => "ignore"},
+      key: "ignore",
+      children: [
+        "Inner Text",
+        %Polonium.VNode{
+          node_name: "br",
+          attributes: %{"class" => "inner"},
+          children: [],
+          key: nil
+        }
+      ]
+    }
+
+    {:safe, html} = Polonium.render(vnode)
+
+    # TODO: fix this so that br is rendered to without closing tag
+    assert Phoenix.HTML.safe_to_string({:safe, html}) ==
+             "<div class=\"outer\">Inner Text<br class=\"inner\"></br></div>"
+  end
 end
