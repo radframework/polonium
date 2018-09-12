@@ -7,7 +7,7 @@ defmodule PoloniumTest do
       vnode = Polonium.h("div")
 
       assert vnode == %Polonium.VNode{
-               node_name: "div",
+               nodeName: "div",
                attributes: %{},
                children: [],
                key: nil
@@ -16,7 +16,7 @@ defmodule PoloniumTest do
       vnode = Polonium.h("div", %{class: "container"})
 
       assert vnode == %Polonium.VNode{
-               node_name: "div",
+               nodeName: "div",
                attributes: %{"class" => "container"},
                children: [],
                key: nil
@@ -25,7 +25,7 @@ defmodule PoloniumTest do
       vnode = Polonium.h("div", %{"class" => "container"})
 
       assert vnode == %Polonium.VNode{
-               node_name: "div",
+               nodeName: "div",
                attributes: %{"class" => "container"},
                children: [],
                key: nil
@@ -34,7 +34,7 @@ defmodule PoloniumTest do
       vnode = Polonium.h("div", class: "container")
 
       assert vnode == %Polonium.VNode{
-               node_name: "div",
+               nodeName: "div",
                attributes: %{"class" => "container"},
                children: [],
                key: nil
@@ -45,7 +45,7 @@ defmodule PoloniumTest do
       vnode = Polonium.h("div", class: "container", key: "key_1")
 
       assert vnode == %Polonium.VNode{
-               node_name: "div",
+               nodeName: "div",
                attributes: %{"class" => "container", "key" => "key_1"},
                children: [],
                key: "key_1"
@@ -60,13 +60,13 @@ defmodule PoloniumTest do
         ])
 
       assert vnode == %Polonium.VNode{
-               node_name: "div",
+               nodeName: "div",
                attributes: %{"class" => "outer"},
                key: nil,
                children: [
                  "Inner Text",
                  %Polonium.VNode{
-                   node_name: "div",
+                   nodeName: "div",
                    attributes: %{"class" => "inner"},
                    children: [],
                    key: nil
@@ -77,7 +77,7 @@ defmodule PoloniumTest do
       vnode = Polonium.h("div", [], "I am not a list")
 
       assert vnode == %Polonium.VNode{
-               node_name: "div",
+               nodeName: "div",
                children: [
                  "I am not a list"
                ]
@@ -93,13 +93,13 @@ defmodule PoloniumTest do
 
   test "should render to HTML" do
     vnode = %Polonium.VNode{
-      node_name: "div",
+      nodeName: "div",
       attributes: %{"class" => "outer", "key" => "ignore"},
       key: "ignore",
       children: [
         "Inner Text",
         %Polonium.VNode{
-          node_name: "br",
+          nodeName: "br",
           attributes: %{"class" => "inner"},
           children: [],
           key: nil
@@ -116,13 +116,13 @@ defmodule PoloniumTest do
 
   test "should compute diff of vnodes" do
     node_a = %Polonium.VNode{
-      node_name: "div",
+      nodeName: "div",
       attributes: %{"class" => "outer"},
       children: ["This is vnode A"]
     }
 
     node_b = %Polonium.VNode{
-      node_name: "div",
+      nodeName: "span",
       attributes: %{"class" => "inner"},
       children: ["This is vnode B"]
     }
@@ -135,7 +135,8 @@ defmodule PoloniumTest do
                "0" => ["This is vnode B"],
                "_0" => ["This is vnode A", 0, 0],
                "_t" => "a"
-             }
+             },
+             nodeName: ["div", "span"]
            }
   end
 end
